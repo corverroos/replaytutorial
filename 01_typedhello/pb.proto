@@ -1,0 +1,9 @@
+syntax = "proto3";
+
+package main;
+
+message Empty{}
+
+message String{
+  string value = 1;
+}
