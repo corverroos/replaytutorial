@@ -29,6 +29,7 @@ type State struct {
 	AppCtxFunc func() context.Context
 }
 
+// Main calls the mainFunc with the tutorial state. It support additional application logic sql migrations.
 func Main(mainFunc func(context.Context, State) error, migrations ...string) {
 	flag.Parse()
 
@@ -67,6 +68,7 @@ func Main(mainFunc func(context.Context, State) error, migrations ...string) {
 	}
 }
 
+// AwaitComplete streams all events and returns on the first RunCompleted event.
 func AwaitComplete(ctx context.Context, cl replay.Client, run string) error {
 	sc, err := cl.Stream("", "", "")(ctx, "")
 	if err != nil {
@@ -79,6 +81,7 @@ func AwaitComplete(ctx context.Context, cl replay.Client, run string) error {
 			return err
 		}
 
+		// Use the replay event handling functions.
 		err = replay.Handle(e, replay.HandleRunCompleted(func(_, _, r string) error {
 			if run == r {
 				return io.EOF

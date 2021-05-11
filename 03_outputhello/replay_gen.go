@@ -7,13 +7,15 @@ import (
 	"time"
 
 	"github.com/corverroos/replay"
+	"github.com/golang/protobuf/proto"
 	"github.com/luno/reflex"
 	// TODO(corver): Support importing other packages.
 )
 
 const (
-	_ns     = "01_typedhello"
-	_wHello = "hello"
+	_ns            = "03_outputhello"
+	_wHello        = "hello"
+	_oHelloMessage = "message"
 )
 
 // RunHello provides a type API for running the hello workflow.
@@ -56,6 +58,9 @@ type helloFlow interface {
 	// The run state is effectively reset. This is handy to mitigate bootstrap load for long running tasks.
 	// It also allows updating the activity logic/ordering.
 	Restart(message *String)
+
+	// EmitMessage stores the message output in the event log and returns when successful.
+	EmitMessage(message *String)
 }
 
 type helloFlowImpl struct {
@@ -82,7 +87,32 @@ func (f helloFlowImpl) Restart(message *String) {
 	f.ctx.Restart(message)
 }
 
+func (f helloFlowImpl) EmitMessage(message *String) {
+	f.ctx.EmitOutput(_oHelloMessage, message)
+}
+
 // StreamHello returns a stream of replay events for the hello workflow and an optional run.
 func StreamHello(cl replay.Client, run string) reflex.StreamFunc {
 	return cl.Stream(_ns, _wHello, run)
+}
+
+// HandleMessage calls fn and returns true if the event is a message output.
+// Use StreamHello to provide the events.
+func HandleMessage(e *reflex.Event, fn func(run string, message *String) error) (bool, error) {
+	var ok bool
+	err := replay.Handle(e,
+		replay.HandleSkip(func(namespace, workflow, run string) bool {
+			return namespace != _ns || workflow != _wHello
+		}),
+		replay.HandleOutput(func(namespace, workflow, run string, output string, message proto.Message) error {
+			if output != _oHelloMessage {
+				return nil
+			}
+			ok = true
+			return fn(run, message.(*String))
+		}))
+	if err != nil {
+		return false, err
+	}
+	return ok, nil
 }

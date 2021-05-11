@@ -8,6 +8,7 @@ Others contain `TODO(you)` that must completed before the program will run succe
 - [00_helloworld](./00_helloworld/main.go) 
 - [01_typedhello](./01_typedhello/main.go) 
 - [02_signalhello](./02_signalhello/main.go) 
+- [03_outputhello](./03_outputhello/main.go) 
 
 Just clone this repo to follow along.
 

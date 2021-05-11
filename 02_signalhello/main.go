@@ -35,7 +35,7 @@ var _ = typedreplay.Namespace{
 	Workflows: []typedreplay.Workflow{
 		{
 			Name:        "hello",
-			Description: "Hello workflow just prints 'Hellow {signal}'",
+			Description: "Hello workflow just prints 'Hello {signal}'",
 			Input:       new(Empty), // Note that we do not provide the name at the start of the run, but later via a signal
 			Signals: []typedreplay.Signal{
 				{
@@ -76,10 +76,10 @@ func Main(ctx context.Context, s tut.State) error {
 	if err != nil {
 		return err
 	} else if !ok {
-		return errors.New("Main already exists, duplicate UUID?!")
+		return errors.New("run already exists, duplicate UUID?!")
 	}
 
-	log.Info(ctx, "started run", j.KS("Main", run))
+	log.Info(ctx, "started run", j.KS("run", run))
 
 	// Ask the user to enter the name and then signal the run.
 	var input string
@@ -91,7 +91,7 @@ func Main(ctx context.Context, s tut.State) error {
 	// TODO(you): signal the run using the generated signal func SignalHelloName
 	//  Note that external ID is a unique idempotency identifier for the signal. It can be anything for now.
 
-	// Wait for the workflow Main to complete. Note that it should still complete
+	// Wait for the workflow run to complete. Note that it should still complete
 	// even if the binary is restarted at this point.
 	return tut.AwaitComplete(ctx, s.Replay, run)
 }

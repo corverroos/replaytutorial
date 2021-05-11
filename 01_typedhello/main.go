@@ -1,8 +1,5 @@
 // Exercise 01_typedhello guides you through using the typedreplay code generator to implement a
 // type-safe version of 00_helloworld
-//
-// Note that the typedreplay command must be available locally:
-//   go install github.com/corverroos/replay/typedreplay/cmd/typedreplay
 package main
 
 import (
@@ -40,7 +37,7 @@ var _ = typedreplay.Namespace{
 	Workflows: []typedreplay.Workflow{
 		{
 			Name:        "hello",
-			Description: "Hello workflow just prints 'Hellow {name}'",
+			Description: "Hello workflow just prints 'Hello {name}'",
 			Input:       new(String),
 		},
 	},
@@ -50,7 +47,10 @@ var _ = typedreplay.Namespace{
 	},
 }
 
-// Step 3: Generate the type-safe replay API for the above definition.
+// Step 4: Install the typedreplay tool locally
+//go:generate go install github.com/corverroos/replay/typedreplay/cmd/typedreplay@latest
+
+// And then generate the type-safe replay API for the above definition.
 //go:generate typedreplay
 
 // TODO(you): Define a similar Print activity function to 00_helloworld.
@@ -60,7 +60,7 @@ var _ = typedreplay.Namespace{
 func Hello(flow helloFlow, name *String) {
 }
 
-// Step 4: Define your Main function which is equivalent to a main function, just with some prepared state.
+// Step 5: Define your Main function which is equivalent to a main function, just with some prepared state.
 func Main(ctx context.Context, s tut.State) error {
 	// Call the generated startReplayLoops, note it defines the signature of the Hello typed workflow function.
 	startReplayLoops(s.AppCtxFunc, s.Replay, s.Cursors, Backends{s}, Hello)
@@ -72,17 +72,17 @@ func Main(ctx context.Context, s tut.State) error {
 	if err != nil {
 		return err
 	} else if !ok {
-		return errors.New("Main already exists, duplicate UUID?!")
+		return errors.New("run already exists, duplicate UUID?!")
 	}
 
-	log.Info(ctx, "started run", j.KS("Main", run))
+	log.Info(ctx, "started run", j.KS("run", run))
 
-	// Wait for the workflow Main to complete. Note that it should still complete
+	// Wait for the workflow run to complete. Note that it should still complete
 	// even if the binary is restarted at this point.
 	return tut.AwaitComplete(ctx, s.Replay, run)
 }
 
-// Step 5: Run the program and confirm the same expected output as 00_helloworld
+// Step 6: Run the program and confirm the same expected output as 00_helloworld
 //go:generate go run github.com/corverroos/replaytutorial/01_typedhello
 
 // Example output:
