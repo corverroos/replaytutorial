@@ -10,7 +10,6 @@ import (
 
 	"github.com/corverroos/replay/typedreplay"
 	"github.com/google/uuid"
-	"github.com/luno/fate"
 	"github.com/luno/jettison/errors"
 	"github.com/luno/jettison/j"
 	"github.com/luno/jettison/log"
@@ -54,15 +53,11 @@ var _ = typedreplay.Namespace{
 // Step 3: Generate the type-safe replay API for the above definition.
 //go:generate typedreplay
 
-// Print is an activity function that logs the message value
-func Print(ctx context.Context, b Backends, f fate.Fate, message *String) (*Empty, error) {
-	log.Info(ctx, message.Value)
-	return new(Empty), nil
-}
+// TODO(you): Define a similar Print activity function to 00_helloworld.
+// func Print(...) {}
 
 // TODO(you): Define a similar workflow function to 00_helloworld, except this time, it is all type-safe.
 func Hello(flow helloFlow, name *String) {
-
 }
 
 // Step 4: Define your Main function which is equivalent to a main function, just with some prepared state.
@@ -86,3 +81,10 @@ func Main(ctx context.Context, s tut.State) error {
 	// even if the binary is restarted at this point.
 	return tut.AwaitComplete(ctx, s.Replay, run)
 }
+
+// Step 5: Run the program and confirm the same expected output as 00_helloworld
+//go:generate go run github.com/corverroos/replaytutorial/01_typedhello
+
+// Example output:
+//  I 13:45:28.757 00_helloworld/main.go:71: started run[run=ba845343-58ba-4d88-8b8b-c46c8f66d25f]
+//  I 13:45:30.770 00_helloworld/main.go:44: Hello world[consumer=replay_activity/00_helloworld/Print,replay_run=ba845343-58ba-4d88-8b8b-c46c8f66d25f]

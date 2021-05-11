@@ -10,3 +10,8 @@ Others contain `TODO(you)` that must completed before the program will run succe
 
 Just clone this repo to follow along.
 
+Running the programs can be done in IDE's supporting go:generate or from the command line.
+```
+go run github.com/corverroos/replaytutorial/00_helloworld
+# Exit early with Ctrl-C to test restart robustness
+```

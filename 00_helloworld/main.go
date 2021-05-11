@@ -3,8 +3,6 @@
 //
 // Note: We are using the type-unsafe replay API in this first example, we will use the preferred
 // typedreplay code generator later.
-//
-// To run this example: go run github.com/corverroos/replaytutorial/00_helloworld
 package main
 
 import (
@@ -76,3 +74,12 @@ func Main(ctx context.Context, s tut.State) error {
 	// even if the binary is restarted at this point.
 	return tut.AwaitComplete(ctx, s.Replay, run)
 }
+
+// Step 4: Run the program and confirm the expected output
+//go:generate go run github.com/corverroos/replaytutorial/00_helloworld
+
+// Example output:
+//  I 13:45:28.757 00_helloworld/main.go:71: started run[run=ba845343-58ba-4d88-8b8b-c46c8f66d25f]
+//  I 13:45:30.770 00_helloworld/main.go:44: Hello world[consumer=replay_activity/00_helloworld/Print,replay_run=ba845343-58ba-4d88-8b8b-c46c8f66d25f]
+
+// Note replay is robust to restarts, so early exit (Ctrl-C) should result in "Hello world" to be printed in the subsequent run.
