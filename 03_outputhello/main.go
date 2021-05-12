@@ -13,15 +13,14 @@ package main
 
 import (
 	"context"
-	"io"
 
 	"github.com/corverroos/replay/typedreplay"
 	"github.com/google/uuid"
 	"github.com/luno/fate"
-	"github.com/luno/jettison/errors"
 	"github.com/luno/jettison/j"
 	"github.com/luno/jettison/log"
 	"github.com/luno/reflex"
+	"github.com/luno/reflex/rpatterns"
 
 	tut "github.com/corverroos/replaytutorial" // Alias replaytutorial to tut for brevity.
 )
@@ -81,21 +80,14 @@ func Main(ctx context.Context, s tut.State) error {
 
 	// Define a reflex consume function that will print message outputs.
 	// Instead of a replay activity, outputs are processed in application logic.
-	name := "03_outputhello/print"
-
 	consume := func(ctx context.Context, f fate.Fate, e *reflex.Event) error {
 		// Use the generated HandleMessage functional option.
 		_, err := HandleMessage(e, func(r string, message *String) error {
 			log.Info(ctx, message.Value, j.KS("replay_run", r)) // Now we can just print here
 
-			// Stop consuming when we get our message
+			// Notify that we are done
 			if r == run {
-				// We are going to return an error, so reflex will not update the cursor, manually do it.
-				if err := s.Cursors.SetCursor(ctx, name, e.ID); err != nil {
-					return err
-				}
-
-				return io.EOF
+				log.Info(ctx, "Press Ctrl-C to exit...")
 			}
 			return nil
 		})
@@ -106,22 +98,18 @@ func Main(ctx context.Context, s tut.State) error {
 	spec := reflex.NewSpec(
 		StreamHello(s.Replay, ""),
 		s.Cursors,
-		reflex.NewConsumer(name, consume))
+		reflex.NewConsumer("03_outputhello/print", consume))
 
-	err := reflex.Run(ctx, spec)
-	if errors.Is(err, io.EOF) {
-		// We got our output
-		return nil
-	} else if err != nil {
-		return err
-	} else {
-		panic("nil not expected")
-	}
+	go rpatterns.RunForever(s.AppCtxFunc, spec)
+
+	<-ctx.Done()
+	return nil
 }
 
 // Step 6: Run the program and confirm the same expected output as 00_helloworld
 //go:generate go run github.com/corverroos/replaytutorial/03_outputhello
 
 // Example output:
-//  I 17:02:40.598 03_outputhello/main.go:90: started run[run=88436372-067a-488b-a34e-3f7e2b4d674e]
-//  I 17:02:42.614 03_outputhello/main.go:97: Hello world[replay_run=88436372-067a-488b-a34e-3f7e2b4d674e]
+//  I 13:48:17.765 03_outputhello/main.go:88: started run[run=f32b1626-e5af-4f8e-a62c-796804c38074]
+//  I 13:48:19.796 03_outputhello/main.go:95: Hello world[consumer=03_outputhello/print,replay_run=f32b1626-e5af-4f8e-a62c-796804c38074]
+//  I 13:48:19.796 03_outputhello/main.go:99: Press Ctrl-C to exit...[consumer=03_outputhello/print]
