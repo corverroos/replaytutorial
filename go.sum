@@ -37,8 +37,12 @@ github.com/corverroos/replay v0.0.0-20210510143618-e2a13cf74888 h1:l8kuYUB2jO3ZR
 github.com/corverroos/replay v0.0.0-20210510143618-e2a13cf74888/go.mod h1:8bLnIZlwozj6ECg8Tw5ShvOsSj6YXkI3WkBkdaj7l8Q=
 github.com/corverroos/replay v0.0.0-20210510154844-26e9511d2aac h1:CS3ZC9GTH6GW0HTw4agBF8hYHFaCMbJdk8cLmmwTc48=
 github.com/corverroos/replay v0.0.0-20210510154844-26e9511d2aac/go.mod h1:kuP595jRieuh4sivSBsLhueDxrcJ3gDfVfaQawBuUss=
+github.com/corverroos/replay v0.0.0-20210514140706-e9441942b8a8 h1:bqsJkyenlQHSRSEXumfRbqjrstBs9mkdllIh0NiJV2A=
+github.com/corverroos/replay v0.0.0-20210514140706-e9441942b8a8/go.mod h1:+n3cru7N4p1uvDUoUd8583mEeG3i1Fjz+dEnB/Cs4Xc=
 github.com/corverroos/truss v0.0.0-20210325092544-7695147a5970 h1:VY6csVAjHxFXH+WxGOmKCGLra69bKi5Z18SHPOyiJiw=
 github.com/corverroos/truss v0.0.0-20210325092544-7695147a5970/go.mod h1:A7bhl0W5AgpM1Q6nI72q1JMQhk1vnse/UA0+Nj2ngLQ=
+github.com/corverroos/truss v0.0.0-20210514115035-9e5e1b0851a9 h1:NMcmq9Y8hV7r67YGUqQjUU4ri+S6MxyDLRXaT2ptr58=
+github.com/corverroos/truss v0.0.0-20210514115035-9e5e1b0851a9/go.mod h1:A7bhl0W5AgpM1Q6nI72q1JMQhk1vnse/UA0+Nj2ngLQ=
 github.com/dave/dst v0.23.1/go.mod h1:LjPcLEauK4jC5hQ1fE/wr05O41zK91Pr4Qs22Ljq7gs=
 github.com/dave/gopackages v0.0.0-20170318123100-46e7023ec56e/go.mod h1:i00+b/gKdIDIxuLDFob7ustLAVqhsZRk2qVZrArELGQ=
 github.com/dave/jennifer v1.2.0/go.mod h1:fIb+770HOpJ2fmN9EPPKOqm1vMGhB+TwXKMZhrIygKg=
@@ -167,6 +171,8 @@ github.com/stretchr/testify v1.3.0/go.mod h1:M5WIy9Dh21IEIfnGCwXGc5bZfKNJtfHm1UV
 github.com/stretchr/testify v1.6.0/go.mod h1:6Fq8oRcR53rry900zMqJjRRixrwX3KX962/h/Wwjteg=
 github.com/stretchr/testify v1.6.1 h1:hDPOHmpOpP40lSULcqw7IrRb/u7w6RpDC9399XyoNd0=
 github.com/stretchr/testify v1.6.1/go.mod h1:6Fq8oRcR53rry900zMqJjRRixrwX3KX962/h/Wwjteg=
+github.com/stretchr/testify v1.7.0 h1:nwc3DEeHmmLAfoZucVR881uASk0Mfjw8xYJ99tb5CcY=
+github.com/stretchr/testify v1.7.0/go.mod h1:6Fq8oRcR53rry900zMqJjRRixrwX3KX962/h/Wwjteg=
 go.opencensus.io v0.15.0/go.mod h1:UffZAU+4sDEINUGP/B7UfBBkq4fqLu9zXAX7ke6CHW0=
 go.opencensus.io v0.21.0/go.mod h1:mSImk1erAIZhrmZN+AvHh14ztQfjbGwt4TtuofqLduU=
 go.opencensus.io v0.22.0/go.mod h1:+kGneAE2xo2IficOXnaByMWTGM9T73dGwxeWcUqIpI8=

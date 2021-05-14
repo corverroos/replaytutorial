@@ -1,0 +1,9 @@
+syntax = "proto3";
+
+package main;
+
+message Empty{}
+
+message Timestamp{
+  int64 unix_sec = 1; // Use int64 unix seconds instead of google/protobuf/timestamp.proto since converting to time.Time doesn't return an error.
+}

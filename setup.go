@@ -114,7 +114,7 @@ func connectDB(ctx context.Context, migrations ...string) (*sql.DB, error) {
 		return nil, err
 	}
 
-	dbc, err = truss.Connect(*dbURL + *dbName)
+	dbc, err = truss.Connect(*dbURL + *dbName + "?parseTime=true")
 	if err != nil {
 		return nil, errors.Wrap(err, "db connect")
 	}

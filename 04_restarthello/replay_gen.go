@@ -13,22 +13,22 @@ import (
 )
 
 const (
-	_ns            = "03_outputhello"
+	_ns            = "04_repeathello"
 	_wHello        = "hello"
 	_oHelloMessage = "message"
 )
 
 // RunHello provides a type API for running the hello workflow.
 // It returns true on success or false on duplicate calls or an error.
-func RunHello(ctx context.Context, cl replay.Client, run string, message *String) (bool, error) {
+func RunHello(ctx context.Context, cl replay.Client, run string, message *State) (bool, error) {
 	return cl.RunWorkflow(ctx, _ns, _wHello, run, message)
 }
 
 // startReplayLoops registers the workflow and activities for typed workflow functions.
 func startReplayLoops(getCtx func() context.Context, cl replay.Client, cstore reflex.CursorStore, b Backends,
-	hello func(helloFlow, *String)) {
+	hello func(helloFlow, *State)) {
 
-	helloFunc := func(ctx replay.RunContext, message *String) {
+	helloFunc := func(ctx replay.RunContext, message *State) {
 		hello(helloFlowImpl{ctx}, message)
 	}
 	replay.RegisterWorkflow(getCtx, cl, cstore, _ns, helloFunc, replay.WithName(_wHello))
@@ -48,13 +48,8 @@ type helloFlow interface {
 	CreateEvent() *reflex.Event
 
 	// LastEvent returns the latest reflex event (type is either internal.CreateRun or internal.ActivityResponse).
-	// The event timestamp could be used to reason about run liveliness.
+	// The event timestamp could be used to reason about run age.
 	LastEvent() *reflex.Event
-
-	// Now returns the last event timestamp as the deterministic "current" time.
-	// It is assumed the first time this is used in logic it will be very close to correct while
-	// producing deterministic logic during bootstrapping.
-	Now() time.Time
 
 	// Run returns the run name/identifier.
 	Run() string
@@ -62,7 +57,7 @@ type helloFlow interface {
 	// Restart completes the current run iteration and starts a new run iteration with the provided input message.
 	// The run state is effectively reset. This is handy to mitigate bootstrap load for long running tasks.
 	// It also allows updating the activity logic/ordering.
-	Restart(message *String)
+	Restart(message *State)
 
 	// EmitMessage stores the message output in the event log and returns when successful.
 	EmitMessage(message *String)
@@ -84,15 +79,11 @@ func (f helloFlowImpl) LastEvent() *reflex.Event {
 	return f.ctx.LastEvent()
 }
 
-func (f helloFlowImpl) Now() time.Time {
-	return f.ctx.LastEvent().Timestamp
-}
-
 func (f helloFlowImpl) Run() string {
 	return f.ctx.Run()
 }
 
-func (f helloFlowImpl) Restart(message *String) {
+func (f helloFlowImpl) Restart(message *State) {
 	f.ctx.Restart(message)
 }
 
@@ -105,10 +96,11 @@ func StreamHello(cl replay.Client, run string) reflex.StreamFunc {
 	return cl.Stream(_ns, _wHello, run)
 }
 
-// HandleMessage calls fn if the event is a message output.
+// HandleMessage calls fn and returns true if the event is a message output.
 // Use StreamHello to provide the events.
-func HandleMessage(e *reflex.Event, fn func(run string, message *String) error) error {
-	return replay.Handle(e,
+func HandleMessage(e *reflex.Event, fn func(run string, message *String) error) (bool, error) {
+	var ok bool
+	err := replay.Handle(e,
 		replay.HandleSkip(func(namespace, workflow, run string) bool {
 			return namespace != _ns || workflow != _wHello
 		}),
@@ -116,7 +108,11 @@ func HandleMessage(e *reflex.Event, fn func(run string, message *String) error) 
 			if output != _oHelloMessage {
 				return nil
 			}
+			ok = true
 			return fn(run, message.(*String))
-		}),
-	)
+		}))
+	if err != nil {
+		return false, err
+	}
+	return ok, nil
 }

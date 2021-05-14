@@ -82,7 +82,7 @@ func Main(ctx context.Context, s tut.State) error {
 	// Instead of a replay activity, outputs are processed in application logic.
 	consume := func(ctx context.Context, f fate.Fate, e *reflex.Event) error {
 		// Use the generated HandleMessage functional option.
-		_, err := HandleMessage(e, func(r string, message *String) error {
+		return HandleMessage(e, func(r string, message *String) error {
 			log.Info(ctx, message.Value, j.KS("replay_run", r)) // Now we can just print here
 
 			// Notify that we are done
@@ -91,7 +91,6 @@ func Main(ctx context.Context, s tut.State) error {
 			}
 			return nil
 		})
-		return err
 	}
 
 	// Define and run the reflex spec using the generated StreamHello function that streams events of the hello workflow.

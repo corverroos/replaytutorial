@@ -1,0 +1,15 @@
+syntax = "proto3";
+
+package main;
+
+message Empty{}
+
+message String{
+  string value = 1;
+}
+
+
+message State{
+  string name = 1;
+  int64 iter = 2;
+}
