@@ -11,6 +11,7 @@ Others contain `TODO(you)` that must completed before the program will run succe
 - [03_outputhello](./03_outputhello/main.go) 
 - [04_restarthello](./04_restarthello/main.go) 
 - [05_cron](./05_cron/main.go) 
+- [06_appendonlylog](./06_appendonlylog/main.go) 
 
 ## Tips
 Read the [replay](https://github.com/corverroos/replay) docs first (can skip *Under the hood*)
