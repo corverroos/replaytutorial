@@ -1,0 +1,21 @@
+syntax = "proto3";
+
+package main;
+
+message Empty {}
+
+message Data{
+  string market = 1;
+  int64 size = 2;
+  int64 period_sec = 3;
+
+  repeated double values = 4;
+}
+
+message Market{
+  string market = 1;
+}
+
+message Double{
+  double value = 1;
+}

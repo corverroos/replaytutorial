@@ -57,7 +57,7 @@ func Main(ctx context.Context, s tut.State) error {
 
 	// Define the log consume function
 	_ = func(ctx context.Context, f fate.Fate, e *reflex.Event) error {
-		// TODO(you): Use replay.Handle(e, replay.HandleRunCreated(...) to consume the log entries
+		// TODO(you): Use the generated HandleAppendRun to consume the log entries
 		// and just print the values
 		panic("implement me")
 	}

@@ -25,8 +25,8 @@ import (
 	"github.com/corverroos/replaytutorial/lib/luno"
 )
 
-// Increase showme to 1 to show next 1 hidden tip
-//go:generate go run ../lib/showme -hide 0
+// Increase showme to 1 to unhide the next solution
+//go:generate go run ../lib/showme 0
 
 // Step 0: main functions always just call tut.Main(Main).
 func main() {
