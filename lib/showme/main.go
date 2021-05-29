@@ -1,3 +1,4 @@
+// Command showme is a go generate tool that shows/hides tutorial solutions.
 package main
 
 import (
@@ -15,7 +16,7 @@ import (
 	"github.com/luno/jettison/j"
 )
 
-var hideFlag = flag.Bool("hide", false, "If enabled, tips are hidden")
+var hideFlag = flag.Bool("hide", false, "If enabled, solutions are hidden")
 
 func main() {
 	if err := run(); err != nil {
