@@ -46,8 +46,13 @@ type helloFlow interface {
 	CreateEvent() *reflex.Event
 
 	// LastEvent returns the latest reflex event (type is either internal.CreateRun or internal.ActivityResponse).
-	// The event timestamp could be used to reason about run age.
+	// The event timestamp could be used to reason about run liveliness.
 	LastEvent() *reflex.Event
+
+	// Now returns the last event timestamp as the deterministic "current" time.
+	// It is assumed the first time this is used in logic it will be very close to correct while
+	// producing deterministic logic during bootstrapping.
+	Now() time.Time
 
 	// Run returns the run name/identifier.
 	Run() string
@@ -72,6 +77,10 @@ func (f helloFlowImpl) CreateEvent() *reflex.Event {
 
 func (f helloFlowImpl) LastEvent() *reflex.Event {
 	return f.ctx.LastEvent()
+}
+
+func (f helloFlowImpl) Now() time.Time {
+	return f.ctx.LastEvent().Timestamp
 }
 
 func (f helloFlowImpl) Run() string {

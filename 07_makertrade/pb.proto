@@ -1,0 +1,25 @@
+syntax = "proto3";
+
+package main;
+
+message Empty {}
+
+message Order{
+  string market = 1;
+  double amount = 2;
+  bool is_buy = 3;
+}
+
+message OrderRef{
+  string market = 1;
+  bool is_buy = 2;
+   double price = 3;
+   string ext_id = 4;
+   int64 time_unix_milli = 5;
+}
+
+
+message OrderState{
+  int32 status = 1;
+  double current_price = 2;
+}

@@ -29,6 +29,13 @@ Install the `typedreplay` code generation tool:
 go install github.com/corverroos/replay/typedreplay/cmd/typedreplay@latest
 ```
 
+Some exercises contain `//showme:hidden foo` directives associated with a `TODO(you)` instruction. 
+Executing the following `go:generate` command will show the next 1 solution in the go file. 
+Note that the `-hide` flag will hide the solutions.
+```
+//go:generate go run ../lib/showme 1 
+``` 
+
 It assumes a mysql DB is accessible at `mysql://root@unix(/tmp/mysql.sock)/`. 
 If not specify the connection url via `db_url`. Note it creates a long-lived 
 database called `replay_tutorial`. Use the flag `db_refresh` to clear the database.

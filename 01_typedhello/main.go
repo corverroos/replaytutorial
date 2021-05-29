@@ -14,6 +14,9 @@ import (
 	tut "github.com/corverroos/replaytutorial" // Alias replaytutorial to tut for brevity.
 )
 
+// Increase showme to 1 to show next hidden solution.
+//go:generate go run ../lib/showme 0
+
 // Step 0: main functions always just call tut.Main(Main).
 func main() {
 	tut.Main(Main)
@@ -44,6 +47,7 @@ var _ = typedreplay.Namespace{
 	// Activities define the namespace activity function names and types.
 	Activities: []typedreplay.Activity{
 		// TODO(you): Define the Print activity.
+		//showme:hidden activity
 	},
 }
 
@@ -54,10 +58,11 @@ var _ = typedreplay.Namespace{
 //go:generate typedreplay
 
 // TODO(you): Define a similar Print activity function to 00_helloworld.
-// func Print(...) {}
+//showme:hidden print
 
 // TODO(you): Define a similar workflow function to 00_helloworld, except this time, it is all type-safe.
 func Hello(flow helloFlow, name *String) {
+	//showme:hidden workflow
 }
 
 // Step 5: Define your Main function which is equivalent to a main function, just with some prepared state.
