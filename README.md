@@ -14,6 +14,7 @@ Others contain `TODO(you)` that must completed before the program will run succe
 - [06_appendonlylog](./06_appendonlylog/main.go) 
 - [07_makertrade](./07_makertrade/main.go) 
 - [08_sparkline](./08_sparkline/main.go) 
+- [09_parentjob](./09_parentjob/main.go) 
 
 ## Tips
 - Read the [replay](https://github.com/corverroos/replay) docs first (can skip *Under the hood*)

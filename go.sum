@@ -43,6 +43,8 @@ github.com/corverroos/replay v0.0.0-20210514161137-de810d6c62ba h1:LbKWnUSNhCCMz
 github.com/corverroos/replay v0.0.0-20210514161137-de810d6c62ba/go.mod h1:+n3cru7N4p1uvDUoUd8583mEeG3i1Fjz+dEnB/Cs4Xc=
 github.com/corverroos/replay v0.0.0-20210529115635-db1561602cce h1:Xo1rBxgy1QLj2U9KsOMiA9Eo8MIZbMY91d/P3UWZa8A=
 github.com/corverroos/replay v0.0.0-20210529115635-db1561602cce/go.mod h1:+n3cru7N4p1uvDUoUd8583mEeG3i1Fjz+dEnB/Cs4Xc=
+github.com/corverroos/replay v0.0.0-20210529141401-04656a85b33f h1:p65K9MbuqWA86xidzlGKbP4JGDCLNDmHmIPhY8aOEQs=
+github.com/corverroos/replay v0.0.0-20210529141401-04656a85b33f/go.mod h1:+n3cru7N4p1uvDUoUd8583mEeG3i1Fjz+dEnB/Cs4Xc=
 github.com/corverroos/truss v0.0.0-20210325092544-7695147a5970 h1:VY6csVAjHxFXH+WxGOmKCGLra69bKi5Z18SHPOyiJiw=
 github.com/corverroos/truss v0.0.0-20210325092544-7695147a5970/go.mod h1:A7bhl0W5AgpM1Q6nI72q1JMQhk1vnse/UA0+Nj2ngLQ=
 github.com/corverroos/truss v0.0.0-20210514115035-9e5e1b0851a9 h1:NMcmq9Y8hV7r67YGUqQjUU4ri+S6MxyDLRXaT2ptr58=

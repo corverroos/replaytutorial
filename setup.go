@@ -5,9 +5,11 @@ import (
 	"database/sql"
 	"flag"
 	"io"
+	"math/rand"
 	"os"
 	"os/signal"
 	"syscall"
+	"time"
 
 	"github.com/corverroos/replay"
 	replay_server "github.com/corverroos/replay/server"
@@ -51,6 +53,8 @@ func Main(mainFunc func(context.Context, State) error, migrations ...string) {
 	}
 
 	replay_server.StartLoops(appCtxFunc, rcl, cstore, dbc)
+
+	rand.Seed(time.Now().UnixNano())
 
 	state := State{
 		DBC:        dbc,

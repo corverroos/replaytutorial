@@ -1,0 +1,32 @@
+syntax = "proto3";
+
+package main;
+
+enum JobStatus {
+  UNKNOWN = 0;
+  PENDING = 1;
+  CLAIMED = 2;
+  COMPLETED = 3;
+  FAILED = 4;
+}
+
+message Empty {}
+
+message JobRequest{
+  JobStatus status = 1;
+  string claimed_by = 2;
+  string fail_reason = 3;
+
+  // Input data
+  bool is_foo = 4;
+  bool is_bar = 5;
+  string value = 6;
+}
+
+message ClaimJob {
+  string by = 1;
+}
+
+message CompleteJob {
+  bool fail = 1;
+}
