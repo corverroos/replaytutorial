@@ -18,11 +18,14 @@ import (
 	"github.com/luno/jettison/log"
 	"github.com/luno/reflex"
 	"github.com/luno/reflex/rsql"
+
+	"github.com/corverroos/replaytutorial/lib/filenotifier"
 )
 
 var dbURL = flag.String("db_url", "mysql://root@unix(/tmp/mysql.sock)/", "mysql db url (without DB name)")
 var dbName = flag.String("db_name", "replay_tutorial", "db schema name")
 var dbRestart = flag.Bool("db_refresh", false, "Whether to drop the existing DB on startup")
+var runLoops = flag.Bool("server_loops", true, "Whether to not to run the replay server loops. Note only a single active process may run the server loops")
 
 type State struct {
 	DBC        *sql.DB
@@ -46,13 +49,21 @@ func Main(mainFunc func(context.Context, State) error, migrations ...string) {
 
 	cstore := rsql.NewCursorsTable("cursors", rsql.WithCursorAsyncDisabled()).ToStore(dbc)
 
-	rcl := replay_server.NewDBClient(dbc)
+	notifier, err := filenotifier.New()
+	if err != nil {
+		log.Error(ctx, errors.Wrap(err, "notifier"))
+		os.Exit(1)
+	}
+
+	rcl := replay_server.NewDBClient(dbc, rsql.WithEventsNotifier(notifier))
 
 	appCtxFunc := func() context.Context {
 		return ctx
 	}
 
-	replay_server.StartLoops(appCtxFunc, rcl, cstore, dbc)
+	if *runLoops {
+		rcl.StartLoops(appCtxFunc, cstore, "")
+	}
 
 	rand.Seed(time.Now().UnixNano())
 
