@@ -3,7 +3,7 @@ module github.com/corverroos/replaytutorial
 go 1.16
 
 require (
-	github.com/corverroos/replay v0.0.0-20210531125334-0741f65e7610
+	github.com/corverroos/replay v0.0.0-20210601143507-5e1a5b3363ce
 	github.com/corverroos/truss v0.0.0-20210514115035-9e5e1b0851a9
 	github.com/fsnotify/fsnotify v1.4.9
 	github.com/golang/protobuf v1.3.3

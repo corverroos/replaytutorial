@@ -31,7 +31,7 @@ import (
 )
 
 // Increase showme to 1 to show next hidden solution.
-//go:generate go run ../lib/showme -hide 0
+//go:generate go run ../lib/showme 0
 
 // Step 0: main functions always just call tut.Main(Main).
 func main() {

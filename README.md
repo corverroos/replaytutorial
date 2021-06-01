@@ -16,10 +16,11 @@ Others contain `TODO(you)` that must completed before the program will run succe
 - [08_sparkline](./08_sparkline/main.go) 
 - [09_parentjob](./09_parentjob/main.go) 
 - [10_distributed](./10_distributed/main.go) 
+- [11_sharding](./11_sharding/main.go) 
 
 #### TODO
-- sharded activity consumers
 - versioning
+- best effort activity consumers
 
 ## Tips
 - Read the [replay](https://github.com/corverroos/replay) docs first (can skip *Under the hood*)
