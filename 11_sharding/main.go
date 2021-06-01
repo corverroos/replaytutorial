@@ -1,5 +1,5 @@
 // Exercise 11_sharding guides you through using sharded activity consumers
-// the parallelize execution of activity functions. Note that same principal
+// that parallelize the execution of activity functions. Note that the same principal
 // applies to workflow consumers.
 //
 // Activity sharding is useful in multiple use-cases:
@@ -104,3 +104,4 @@ func Main(ctx context.Context, s tut.State) error {
 // Experiments:
 // - What happens if you use WithHashShard instead?
 // - Try sharding the workflow function as well
+// - What happens if not all activity shards are registered.
