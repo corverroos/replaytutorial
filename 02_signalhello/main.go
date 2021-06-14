@@ -22,7 +22,7 @@ func main() {
 // Step 1: Replay always requires protobufs, so generate your types.
 //go:generate protoc --go_out=plugins=grpc:. ./pb.proto
 
-// Step 2: typedreplay requires a locally defined Backends. Since we do not actually use if now, it can be empty.
+// Step 2: typedreplay requires a locally defined Backends. Since we do not actually use it now, it can be empty.
 
 type Backends struct{}
 
